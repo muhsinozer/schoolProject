@@ -1,0 +1,361 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="Borclar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TarihSaat" Type="datetime" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="Borc" Type="money" />
+          <Property Name="MusteriId" Type="int" />
+        </EntityType>
+        <EntityType Name="IslemKaydi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UygIslem" Type="nvarchar(max)" />
+          <Property Name="AlinanUcret" Type="money" />
+          <Property Name="Note" Type="nvarchar(max)" />
+          <Property Name="MusId" Type="int" />
+          <Property Name="KulId" Type="int" />
+          <Property Name="IslemTarihi" Type="date" />
+        </EntityType>
+        <EntityType Name="Kullanicilar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kuladi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Unvan" Type="nvarchar" MaxLength="50" />
+          <Property Name="AdSoyad" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Musteriler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdSoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="DogumTarihi" Type="date" />
+          <Property Name="TelCep" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="100" />
+          <Property Name="Eposta" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Randevular">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Tarih" Type="date" Nullable="false" />
+          <Property Name="Saat" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Durum" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="Islem" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MusId" Type="int" Nullable="false" />
+          <Property Name="SecilenSaatler" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_Borclar_ToTable">
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="1" />
+          <End Role="Borclar" Type="Self.Borclar" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Borclar">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IslemKaydi_Kullanicilar">
+          <End Role="Kullanicilar" Type="Self.Kullanicilar" Multiplicity="0..1" />
+          <End Role="IslemKaydi" Type="Self.IslemKaydi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IslemKaydi">
+              <PropertyRef Name="KulId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IslemKaydi_ToTable">
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="1" />
+          <End Role="IslemKaydi" Type="Self.IslemKaydi" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IslemKaydi">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Randevular_Musteriler">
+          <End Role="Musteriler" Type="Self.Musteriler" Multiplicity="1" />
+          <End Role="Randevular" Type="Self.Randevular" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Randevular">
+              <PropertyRef Name="MusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="Borclar" EntityType="Self.Borclar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IslemKaydi" EntityType="Self.IslemKaydi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kullanicilar" EntityType="Self.Kullanicilar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Musteriler" EntityType="Self.Musteriler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Randevular" EntityType="Self.Randevular" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Borclar_ToTable" Association="Self.FK_Borclar_ToTable">
+            <End Role="Musteriler" EntitySet="Musteriler" />
+            <End Role="Borclar" EntitySet="Borclar" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IslemKaydi_Kullanicilar" Association="Self.FK_IslemKaydi_Kullanicilar">
+            <End Role="Kullanicilar" EntitySet="Kullanicilar" />
+            <End Role="IslemKaydi" EntitySet="IslemKaydi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IslemKaydi_ToTable" Association="Self.FK_IslemKaydi_ToTable">
+            <End Role="Musteriler" EntitySet="Musteriler" />
+            <End Role="IslemKaydi" EntitySet="IslemKaydi" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Randevular_Musteriler" Association="Self.FK_Randevular_Musteriler">
+            <End Role="Musteriler" EntitySet="Musteriler" />
+            <End Role="Randevular" EntitySet="Randevular" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityType Name="Borclar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TarihSaat" Type="DateTime" Precision="3" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Borc" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="MusteriId" Type="Int32" />
+          <NavigationProperty Name="Musteriler" Relationship="Database1Model.FK_Borclar_ToTable" FromRole="Borclar" ToRole="Musteriler" />
+        </EntityType>
+        <EntityType Name="IslemKaydi">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UygIslem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AlinanUcret" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MusId" Type="Int32" />
+          <Property Name="KulId" Type="Int32" />
+          <Property Name="IslemTarihi" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="Musteriler" Relationship="Database1Model.FK_IslemKaydi_ToTable" FromRole="IslemKaydi" ToRole="Musteriler" />
+          <NavigationProperty Name="Kullanicilar" Relationship="Database1Model.FK_IslemKaydi_Kullanicilar" FromRole="IslemKaydi" ToRole="Kullanicilar" />
+        </EntityType>
+        <EntityType Name="Kullanicilar">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kuladi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Unvan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="IslemKaydis" Relationship="Database1Model.FK_IslemKaydi_Kullanicilar" FromRole="Kullanicilar" ToRole="IslemKaydi" />
+        </EntityType>
+        <EntityType Name="Musteriler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DogumTarihi" Type="DateTime" Precision="0" />
+          <Property Name="TelCep" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Adres" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Eposta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Borclar" Relationship="Database1Model.FK_Borclar_ToTable" FromRole="Musteriler" ToRole="Borclar" />
+          <NavigationProperty Name="IslemKaydi" Relationship="Database1Model.FK_IslemKaydi_ToTable" FromRole="Musteriler" ToRole="IslemKaydi" />
+          <NavigationProperty Name="Randevulars" Relationship="Database1Model.FK_Randevular_Musteriler" FromRole="Musteriler" ToRole="Randevular" />
+        </EntityType>
+        <EntityType Name="Randevular">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Saat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Durum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <Property Name="Islem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MusId" Type="Int32" Nullable="false" />
+          <Property Name="SecilenSaatler" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Musteriler" Relationship="Database1Model.FK_Randevular_Musteriler" FromRole="Randevular" ToRole="Musteriler" />
+        </EntityType>
+        <EntityContainer Name="GuzellikSalonuEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Borclars" EntityType="Self.Borclar" />
+          <EntitySet Name="IslemKaydis" EntityType="Self.IslemKaydi" />
+          <EntitySet Name="Kullanicilars" EntityType="Self.Kullanicilar" />
+          <EntitySet Name="Musterilers" EntityType="Self.Musteriler" />
+          <EntitySet Name="Randevulars" EntityType="Self.Randevular" />
+          <AssociationSet Name="FK_Borclar_ToTable" Association="Database1Model.FK_Borclar_ToTable">
+            <End Role="Musteriler" EntitySet="Musterilers" />
+            <End Role="Borclar" EntitySet="Borclars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IslemKaydi_ToTable" Association="Database1Model.FK_IslemKaydi_ToTable">
+            <End Role="Musteriler" EntitySet="Musterilers" />
+            <End Role="IslemKaydi" EntitySet="IslemKaydis" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Randevular_Musteriler" Association="Database1Model.FK_Randevular_Musteriler">
+            <End Role="Musteriler" EntitySet="Musterilers" />
+            <End Role="Randevular" EntitySet="Randevulars" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IslemKaydi_Kullanicilar" Association="Database1Model.FK_IslemKaydi_Kullanicilar">
+            <End Role="Kullanicilar" EntitySet="Kullanicilars" />
+            <End Role="IslemKaydi" EntitySet="IslemKaydis" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Borclar_ToTable">
+          <End Type="Database1Model.Musteriler" Role="Musteriler" Multiplicity="1" />
+          <End Type="Database1Model.Borclar" Role="Borclar" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Borclar">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IslemKaydi_ToTable">
+          <End Type="Database1Model.Musteriler" Role="Musteriler" Multiplicity="1" />
+          <End Type="Database1Model.IslemKaydi" Role="IslemKaydi" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IslemKaydi">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Randevular_Musteriler">
+          <End Type="Database1Model.Musteriler" Role="Musteriler" Multiplicity="1" />
+          <End Type="Database1Model.Randevular" Role="Randevular" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Musteriler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Randevular">
+              <PropertyRef Name="MusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IslemKaydi_Kullanicilar">
+          <End Type="Database1Model.Kullanicilar" Role="Kullanicilar" Multiplicity="0..1" />
+          <End Type="Database1Model.IslemKaydi" Role="IslemKaydi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kullanicilar">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IslemKaydi">
+              <PropertyRef Name="KulId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="GuzellikSalonuEntities">
+          <EntitySetMapping Name="Borclars">
+            <EntityTypeMapping TypeName="Database1Model.Borclar">
+              <MappingFragment StoreEntitySet="Borclar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="TarihSaat" ColumnName="TarihSaat" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Borc" ColumnName="Borc" />
+                <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IslemKaydis">
+            <EntityTypeMapping TypeName="Database1Model.IslemKaydi">
+              <MappingFragment StoreEntitySet="IslemKaydi">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UygIslem" ColumnName="UygIslem" />
+                <ScalarProperty Name="AlinanUcret" ColumnName="AlinanUcret" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="MusId" ColumnName="MusId" />
+                <ScalarProperty Name="KulId" ColumnName="KulId" />
+                <ScalarProperty Name="IslemTarihi" ColumnName="IslemTarihi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kullanicilars">
+            <EntityTypeMapping TypeName="Database1Model.Kullanicilar">
+              <MappingFragment StoreEntitySet="Kullanicilar">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Kuladi" ColumnName="Kuladi" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="Unvan" ColumnName="Unvan" />
+                <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Musterilers">
+            <EntityTypeMapping TypeName="Database1Model.Musteriler">
+              <MappingFragment StoreEntitySet="Musteriler">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+                <ScalarProperty Name="DogumTarihi" ColumnName="DogumTarihi" />
+                <ScalarProperty Name="TelCep" ColumnName="TelCep" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="Eposta" ColumnName="Eposta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Randevulars">
+            <EntityTypeMapping TypeName="Database1Model.Randevular">
+              <MappingFragment StoreEntitySet="Randevular">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Saat" ColumnName="Saat" />
+                <ScalarProperty Name="Durum" ColumnName="Durum" />
+                <ScalarProperty Name="Islem" ColumnName="Islem" />
+                <ScalarProperty Name="MusId" ColumnName="MusId" />
+                <ScalarProperty Name="SecilenSaatler" ColumnName="SecilenSaatler" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

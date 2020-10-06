@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2bb03573976e4e04b7201c47f8fe2e1e" Name="Diagram1">
+        <EntityTypeShape EntityType="Database1Model.Borclar" Width="1.5" PointX="2.625" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.IslemKaydi" Width="1.5" PointX="3.25" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Kullanicilar" Width="1.5" PointX="0.5" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Musteriler" Width="1.5" PointX="5.5" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Database1Model.Randevular" Width="1.5" PointX="8.375" PointY="2.75" IsExpanded="true" />
+        <AssociationConnector Association="Database1Model.FK_Borclar_ToTable" />
+        <AssociationConnector Association="Database1Model.FK_IslemKaydi_ToTable" />
+        <AssociationConnector Association="Database1Model.FK_Randevular_Musteriler" />
+        <AssociationConnector Association="Database1Model.FK_IslemKaydi_Kullanicilar" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

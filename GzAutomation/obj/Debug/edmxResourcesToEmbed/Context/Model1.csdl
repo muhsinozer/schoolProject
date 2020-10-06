@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Database1Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityType Name="Borclar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TarihSaat" Type="DateTime" Precision="3" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Borc" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="MusteriId" Type="Int32" />
+    <NavigationProperty Name="Musteriler" Relationship="Database1Model.FK_Borclar_ToTable" FromRole="Borclar" ToRole="Musteriler" />
+  </EntityType>
+  <EntityType Name="IslemKaydi">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UygIslem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AlinanUcret" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Note" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="MusId" Type="Int32" />
+    <Property Name="KulId" Type="Int32" />
+    <Property Name="IslemTarihi" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="Musteriler" Relationship="Database1Model.FK_IslemKaydi_ToTable" FromRole="IslemKaydi" ToRole="Musteriler" />
+    <NavigationProperty Name="Kullanicilar" Relationship="Database1Model.FK_IslemKaydi_Kullanicilar" FromRole="IslemKaydi" ToRole="Kullanicilar" />
+  </EntityType>
+  <EntityType Name="Kullanicilar">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Kuladi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Unvan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="AdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="IslemKaydis" Relationship="Database1Model.FK_IslemKaydi_Kullanicilar" FromRole="Kullanicilar" ToRole="IslemKaydi" />
+  </EntityType>
+  <EntityType Name="Musteriler">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DogumTarihi" Type="DateTime" Precision="0" />
+    <Property Name="TelCep" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Adres" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Eposta" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Borclar" Relationship="Database1Model.FK_Borclar_ToTable" FromRole="Musteriler" ToRole="Borclar" />
+    <NavigationProperty Name="IslemKaydi" Relationship="Database1Model.FK_IslemKaydi_ToTable" FromRole="Musteriler" ToRole="IslemKaydi" />
+    <NavigationProperty Name="Randevulars" Relationship="Database1Model.FK_Randevular_Musteriler" FromRole="Musteriler" ToRole="Randevular" />
+  </EntityType>
+  <EntityType Name="Randevular">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Tarih" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Saat" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Durum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Islem" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MusId" Type="Int32" Nullable="false" />
+    <Property Name="SecilenSaatler" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Musteriler" Relationship="Database1Model.FK_Randevular_Musteriler" FromRole="Randevular" ToRole="Musteriler" />
+  </EntityType>
+  <EntityContainer Name="GuzellikSalonuEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Borclars" EntityType="Self.Borclar" />
+    <EntitySet Name="IslemKaydis" EntityType="Self.IslemKaydi" />
+    <EntitySet Name="Kullanicilars" EntityType="Self.Kullanicilar" />
+    <EntitySet Name="Musterilers" EntityType="Self.Musteriler" />
+    <EntitySet Name="Randevulars" EntityType="Self.Randevular" />
+    <AssociationSet Name="FK_Borclar_ToTable" Association="Database1Model.FK_Borclar_ToTable">
+      <End Role="Musteriler" EntitySet="Musterilers" />
+      <End Role="Borclar" EntitySet="Borclars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IslemKaydi_ToTable" Association="Database1Model.FK_IslemKaydi_ToTable">
+      <End Role="Musteriler" EntitySet="Musterilers" />
+      <End Role="IslemKaydi" EntitySet="IslemKaydis" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Randevular_Musteriler" Association="Database1Model.FK_Randevular_Musteriler">
+      <End Role="Musteriler" EntitySet="Musterilers" />
+      <End Role="Randevular" EntitySet="Randevulars" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IslemKaydi_Kullanicilar" Association="Database1Model.FK_IslemKaydi_Kullanicilar">
+      <End Role="Kullanicilar" EntitySet="Kullanicilars" />
+      <End Role="IslemKaydi" EntitySet="IslemKaydis" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_Borclar_ToTable">
+    <End Type="Database1Model.Musteriler" Role="Musteriler" Multiplicity="1" />
+    <End Type="Database1Model.Borclar" Role="Borclar" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Musteriler">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Borclar">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IslemKaydi_ToTable">
+    <End Type="Database1Model.Musteriler" Role="Musteriler" Multiplicity="1" />
+    <End Type="Database1Model.IslemKaydi" Role="IslemKaydi" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Musteriler">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="IslemKaydi">
+        <PropertyRef Name="Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Randevular_Musteriler">
+    <End Type="Database1Model.Musteriler" Role="Musteriler" Multiplicity="1" />
+    <End Type="Database1Model.Randevular" Role="Randevular" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Musteriler">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Randevular">
+        <PropertyRef Name="MusId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IslemKaydi_Kullanicilar">
+    <End Type="Database1Model.Kullanicilar" Role="Kullanicilar" Multiplicity="0..1" />
+    <End Type="Database1Model.IslemKaydi" Role="IslemKaydi" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Kullanicilar">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="IslemKaydi">
+        <PropertyRef Name="KulId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

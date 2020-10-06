@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="GuzellikSalonuEntities">
+    <EntitySetMapping Name="Borclars">
+      <EntityTypeMapping TypeName="Database1Model.Borclar">
+        <MappingFragment StoreEntitySet="Borclar">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TarihSaat" ColumnName="TarihSaat" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="Borc" ColumnName="Borc" />
+          <ScalarProperty Name="MusteriId" ColumnName="MusteriId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IslemKaydis">
+      <EntityTypeMapping TypeName="Database1Model.IslemKaydi">
+        <MappingFragment StoreEntitySet="IslemKaydi">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UygIslem" ColumnName="UygIslem" />
+          <ScalarProperty Name="AlinanUcret" ColumnName="AlinanUcret" />
+          <ScalarProperty Name="Note" ColumnName="Note" />
+          <ScalarProperty Name="MusId" ColumnName="MusId" />
+          <ScalarProperty Name="KulId" ColumnName="KulId" />
+          <ScalarProperty Name="IslemTarihi" ColumnName="IslemTarihi" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Kullanicilars">
+      <EntityTypeMapping TypeName="Database1Model.Kullanicilar">
+        <MappingFragment StoreEntitySet="Kullanicilar">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Kuladi" ColumnName="Kuladi" />
+          <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+          <ScalarProperty Name="Unvan" ColumnName="Unvan" />
+          <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Musterilers">
+      <EntityTypeMapping TypeName="Database1Model.Musteriler">
+        <MappingFragment StoreEntitySet="Musteriler">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+          <ScalarProperty Name="DogumTarihi" ColumnName="DogumTarihi" />
+          <ScalarProperty Name="TelCep" ColumnName="TelCep" />
+          <ScalarProperty Name="Adres" ColumnName="Adres" />
+          <ScalarProperty Name="Eposta" ColumnName="Eposta" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Randevulars">
+      <EntityTypeMapping TypeName="Database1Model.Randevular">
+        <MappingFragment StoreEntitySet="Randevular">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+          <ScalarProperty Name="Saat" ColumnName="Saat" />
+          <ScalarProperty Name="Durum" ColumnName="Durum" />
+          <ScalarProperty Name="Islem" ColumnName="Islem" />
+          <ScalarProperty Name="MusId" ColumnName="MusId" />
+          <ScalarProperty Name="SecilenSaatler" ColumnName="SecilenSaatler" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
